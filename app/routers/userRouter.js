@@ -1,6 +1,7 @@
 const express = require('express')
 const route = express.Router()
 const userController = require('../Controllers/userController')
+const coinController = require('../Controllers/coinBuySell')
 const SwapToken = require('../Controllers/uniswapTrader')
 const { authuser } = require("../middlewares/authuser")
 
@@ -20,6 +21,11 @@ route.get('/allWatchlistData', authuser, userController.allWatchList);
 route.post('/removeCoinWatchlist', authuser, userController.removeCoinWatchlist);
 route.post('/verifyPrivateKey', authuser , userController.verifyPrivateKey);
 route.get('/fetchbalance', userController.fetchBalance);
+
+route.post('/balance', authuser  ,coinController.addbalance);
+route.post('/buyCoin', authuser ,  coinController.buy);
+route.post('/sellCoin', authuser ,  coinController.sell);
+route.get('/viewbalance', authuser ,  coinController.viewBalance);
 
 route.post('/swapToken',SwapToken.swapToken);
 

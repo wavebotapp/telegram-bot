@@ -6,8 +6,7 @@ async function telegram() {
   const axios = require('axios');
 
   const TOKEN = process.env.TELEGRAM_TOKEN;
-  //const API_URL = 'http://localhost:3332'; 
-  const API_URL = 'https://core-ivory.vercel.app/'; 
+  const API_URL = 'http://localhost:3332'; // Replace with your actual API endpoint
   const WEBSITE_URL = 'https://marketing-dashboard-beta.vercel.app/';
   const bot = new TelegramBot(TOKEN, { polling: true });
 
@@ -234,6 +233,7 @@ async function telegram() {
                           email,
                           otp,
                         });
+
                         if (response.data.status === true) {
                           const { message, data } = response.data;
                           await bot.sendMessage(chatId, `User verified successfully`);

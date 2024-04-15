@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto');
 const axios = require('axios');
 const userModel = require('../Models/userModel')
+const txnModel = require('../Models/Txn.model')
 const ethers = require('ethers');
 const { ObjectId } = require('mongodb')
 var randomstring = require("randomstring");
@@ -84,6 +85,29 @@ const login = async (req, res) => {
         return res.status(HTTP.SUCCESS).send({ status: false, code: HTTP.INTERNAL_SERVER_ERROR, msg: "Something Went Wrong", error: error.msg })
     }
 }
+
+// Verify User
+// const verify = async (req, res) => {
+//     console.log("===================== Verify =================", req.body)
+//     try {
+//         const email = req.body.email;
+//         const otp = req.body.otp;
+//         if (!email) return res.status(HTTP.SUCCESS).send({ status: false, "code": HTTP.NOT_ALLOWED, "msg": "Email Is Required", data: {} })
+//         if (!email.includes("@")) return res.status(HTTP.SUCCESS).send({ "status": false, 'code': HTTP.BAD_REQUEST, "msg": "Email is invalid !", data: {} })
+//         const findEmail = await userModel.findOne({ email: email })
+//         if (!findEmail) {
+//             return res.status(HTTP.SUCCESS).send({ status: false, code: HTTP.BAD_REQUEST, msg: "You Are Not Register" })
+//         }
+//         if (findEmail.otp == otp) {
+//             const Update = await userModel.findOneAndUpdate({ email: email }, { verify: true, otp: 0 }, { new: true })
+//             return res.status(HTTP.SUCCESS).send({ status: true, code: HTTP.SUCCESS, msg: "Verify Successfully", data: req.body.types })
+//         } else {
+//             return res.status(HTTP.SUCCESS).send({ status: false, code: HTTP.BAD_REQUEST, msg: "Please Enter Valid OTP" })
+//         }
+//     } catch (error) {
+//         return res.status(HTTP.SUCCESS).send({ status: false, code: HTTP.INTERNAL_SERVER_ERROR, msg: "Something Went Wrong", error: error.msg })
+//     }
+// }
 
 const verify = async (req, res) => {
     console.log("===================== Verify =================", req.body)
