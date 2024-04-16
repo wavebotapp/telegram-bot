@@ -6,9 +6,9 @@ async function telegram() {
   const axios = require('axios');
 
   const TOKEN = process.env.TELEGRAM_TOKEN;
-  //const API_URL = 'https://core-ivory.vercel.app/'; // Replace with your actual API endpoint
-  const BACKEND_API = 'https://core-ivory.vercel.app/'; // Replace with your actual API endpoint
-  //const WEBSITE_URL = 'https://marketing-dashboard-beta.vercel.app/';
+  const API_URL = 'https://core-ivory.vercel.app/'; // Replace with your actual API endpoint
+  //const BACKEND_API = 'https://core-ivory.vercel.app/'; // Replace with your actual API endpoint
+  const WEBSITE_URL = 'https://marketing-dashboard-beta.vercel.app/';
   const bot = new TelegramBot(TOKEN, { polling: true });
 
   const buyKeyboard = {
@@ -207,7 +207,7 @@ async function telegram() {
                   }
 
                   // Register a new user
-                  const response = await axios.post(`${BACKEND_API}/signup`, {
+                  const response = await axios.post(`${API_URL}/signup`, {
                     name,
                     email,
                     password,
@@ -230,7 +230,7 @@ async function telegram() {
 
                       try {
                         // Verify the user with OTP
-                        const response = await axios.post(`${BACKEND_API}/verify`, {
+                        const response = await axios.post(`${API_URL}/verify`, {
                           email,
                           otp,
                         });
@@ -279,7 +279,7 @@ async function telegram() {
             const password = passwordMsg.text;
             try {
               // Login the user
-              const response = await axios.post(`${BACKEND_API}/login`, {
+              const response = await axios.post(`${API_URL}/login`, {
                 email,
                 password,
               });

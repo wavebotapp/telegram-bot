@@ -43,6 +43,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    token: {
+        type: String
+    },
     chatId: {
         type: Number,
         required: true,
