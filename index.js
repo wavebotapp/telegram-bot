@@ -137,6 +137,10 @@ bot.on('message', async (msg) => {
     }
 });
 
+app.all("*", (req, res) => {
+    res.send("URL not found")
+})
+
 console.log('Bot started!');
 console.log('Server running');
 
