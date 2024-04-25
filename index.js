@@ -212,9 +212,11 @@ function startSignUp(chatId) {
     bot.sendMessage(chatId, 'Please provide your name:');
     bot.once('message', async (nameMsg) => {
         const name = nameMsg.text;
+        console.log("🚀 ~ bot.once ~ name:", name)
         bot.sendMessage(chatId, 'Please provide your email:');
         bot.once('message', async (emailMsg) => {
             const email = emailMsg.text;
+            console.log("🚀 ~ bot.once ~ email:", email)
             bot.sendMessage(chatId, 'Please provide your password:');
             bot.once('message', async (passwordMsg) => {
                 const password = passwordMsg.text;
@@ -232,6 +234,29 @@ function startSignUp(chatId) {
                         const { message, data } = response.data;
                         if (data && data.email) {
                             await bot.sendMessage(chatId, `User registered successfully. Email: ${data.email}`);
+                            bot.sendMessage(chatId, 'Please provide your email:');
+                                bot.once('message', async (emailMsg) => {
+                                    const email = emailMsg.text;
+                                    bot.sendMessage(chatId, 'Please Check Your Email & Enter your OTP:');
+                                    bot.once('message', async (otpMsg) => {
+                                        const otp = otpMsg.text;
+                                        try {
+                                            const response = await axios.post(`${API_URL}/verify`, {
+                                                email,
+                                                otp,
+                                            });
+                                            if (response.data.status === true) {
+                                                const { message, data } = response.data;
+                                                await bot.sendMessage(chatId, `User verified successfully`);
+                                            } else if (response.data.status === false) {
+                                                bot.sendMessage(chatId, `Invalid OTP. Please enter a valid OTP.`);
+                                            }
+                                        } catch (error) {
+                                            console.error('Error:', error.message);
+                                            bot.sendMessage(chatId, `An error occurred while verifying the user: ${error.message}`);
+                                        }
+                                    });
+                                });
                         } else {
                             bot.sendMessage(chatId, `Failed to register user. Please try again.`);
                         }
